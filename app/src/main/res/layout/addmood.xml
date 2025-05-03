@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity='center'
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="Add Mood"
+        android:textSize='50sp' />
+
+<!--don't add a layout weight to the rating bar, the stars
+will disappear-->
+    <RatingBar
+        android:id="@+id/rateMood"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:numStars="5"
+        android:progressTint="#000000"
+        android:rating="2.5"
+        android:stepSize="0.5" />
+
+    <EditText
+        android:id="@+id/description"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="9"
+        android:gravity="start"
+        android:hint="Why do you feel like so!"
+        android:textSize='50sp' />
+
+    <Button
+        android:id="@+id/submitButton"
+        android:layout_width="500dp"
+        android:layout_height="10dp"
+        android:layout_weight="1"
+        android:text="Save Entry"
+        android:textSize="50sp"/>
+
+</LinearLayout>
