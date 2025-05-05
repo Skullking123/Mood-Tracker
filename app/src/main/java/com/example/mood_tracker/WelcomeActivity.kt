@@ -6,15 +6,24 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.RadioButton
 import android.widget.RadioGroup
+import android.widget.RelativeLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
+import org.w3c.dom.Text
 
 class WelcomeActivity : AppCompatActivity() {
     private lateinit var nameInput: EditText
     private lateinit var radioGroup: RadioGroup
     private lateinit var warningMessage: TextView
     private lateinit var continueButton: Button
+    private lateinit var layout : RelativeLayout
+    private lateinit var title : TextView
+    private lateinit var description: TextView
+    private lateinit var text : TextView
+    private lateinit var colorblindText : TextView
+    private lateinit var normalText : TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,12 +31,70 @@ class WelcomeActivity : AppCompatActivity() {
         //sets the screen to welcome screen
         setContentView(R.layout.welcome_screen)
 
+        //getting relevent views
         nameInput = findViewById(R.id.nameEntered)
         radioGroup = findViewById(R.id.colorModeGroup)
         warningMessage = findViewById(R.id.warningText)
         continueButton = findViewById(R.id.continueButton)
+        layout = findViewById(R.id.layout)
+        title = findViewById(R.id.welcomeTitle)
+        description = findViewById(R.id.welcomeDescription)
+        text = findViewById(R.id.colorPreferenceText)
+        colorblindText = findViewById(R.id.colorblindOption)
+        normalText = findViewById(R.id.normalColorOption)
+
+        //load possible saved local data
+        val prefs = getSharedPreferences("user_prefs", MODE_PRIVATE)
+        val savedName = prefs.getString("user_name", "")
+        val savedMode = prefs.getString("color_mode", "")
+
+        //load colors base on data, if theres nothing saved, just normal mode
+        if (savedMode != null) {
+            applyColorMode(savedMode)
+        } else {
+            applyColorMode("normal")
+        }
+
+        //fill name if saved
+        nameInput.setText(savedName)
+
+        //check radio button of the last one
+        when (savedMode) {
+            "colorblind" -> radioGroup.check(R.id.colorblindOption)
+            "normal" -> radioGroup.check(R.id.normalColorOption)
+        }
+
+        //onClickListener for Radio Button
+        radioGroup.setOnCheckedChangeListener { _, checkedId ->
+            if (checkedId == R.id.colorblindOption) {
+                val mode = "colorblind"
+                applyColorMode(mode)
+            } else {
+                val mode = "normal"
+                applyColorMode(mode)
+            }
+        }
 
         continueButton.setOnClickListener { checkInputs() }
+    }
+
+    private fun applyColorMode(mode: String) {
+        val backgroundColor = ContextCompat.getColor(this,
+            if (mode == "colorblind") R.color.backgroundColor_cb else R.color.backgroundColor)
+        val titleColor = ContextCompat.getColor(this,
+            if (mode == "colorblind") R.color.titleColor_cb else R.color.titleColor)
+        val descriptionColor = ContextCompat.getColor(this,
+            if (mode == "colorblind") R.color.descriptionColor_cb else R.color.descriptionColor)
+        val textColor = ContextCompat.getColor(this,
+            if (mode == "colorblind") R.color.textColor_cb else R.color.textColor)
+
+        layout.setBackgroundColor(backgroundColor)
+        title.setTextColor(titleColor)
+        description.setTextColor(descriptionColor)
+        text.setTextColor(titleColor)
+        normalText.setTextColor(textColor)
+        colorblindText.setTextColor(textColor)
+
     }
 
     //function will validate the form and move to the next view if valid
@@ -37,8 +104,8 @@ class WelcomeActivity : AppCompatActivity() {
         //gets if of the selected radioButton, if nothing selected, returns 0
         val selectedId = radioGroup.checkedRadioButtonId
 
-        //sees if the name is not empty that that a color option was clicked
-        if (name.isNotEmpty() && selectedId != -1) {
+        //sees if a color option was clicked
+        if (selectedId != -1) {
             // Save to preferences
             val selectedRadio = findViewById<RadioButton>(selectedId)
             //determines the mode where the user either selects normal or colorblind
@@ -47,7 +114,7 @@ class WelcomeActivity : AppCompatActivity() {
             //local persistent data
             val prefs = getSharedPreferences("user_prefs", MODE_PRIVATE)
             prefs.edit()
-                .putString("user_name", name)
+                .putString("user_name", name) //empty is fine
                 .putString("color_mode", mode)
                 .apply()
 
@@ -58,7 +125,7 @@ class WelcomeActivity : AppCompatActivity() {
 
         //will display warning message
         } else {
-            warningMessage.text = "Please enter your name and select a color preference."
+            warningMessage.text = "Please select a color preference."
             warningMessage.visibility = TextView.VISIBLE
         }
     }

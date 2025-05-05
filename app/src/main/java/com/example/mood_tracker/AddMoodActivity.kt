@@ -15,6 +15,8 @@ import android.speech.RecognitionListener
 import android.speech.RecognizerIntent
 import android.speech.SpeechRecognizer
 import android.widget.ImageButton
+import android.widget.LinearLayout
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.ActivityResultCallback
 import androidx.activity.result.ActivityResultLauncher
@@ -26,6 +28,10 @@ class AddMoodActivity : AppCompatActivity() {
     private lateinit var launcher : ActivityResultLauncher<String>
     private lateinit var speechRecognizer: SpeechRecognizer
     private lateinit var listenIntent : Intent
+
+    private lateinit var layout: LinearLayout
+    private lateinit var title: TextView
+
 
     lateinit var moodTracker : MoodTracker
     var year : Int = 0
@@ -39,6 +45,7 @@ class AddMoodActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.addmood)
+
 
         // prepare for speech recognition
         speechRecognizer = SpeechRecognizer.createSpeechRecognizer( this )
@@ -75,8 +82,33 @@ class AddMoodActivity : AppCompatActivity() {
         submit = findViewById<Button>(R.id.submitButton)
         submit.setOnClickListener(SubmitListener())
         Log.w("MainActivity", "Finished AddMoodActivity.onCreate")
+
+        //finding views for colors
+        layout = findViewById(R.id.main)
+        title = findViewById(R.id.title)
+
+        //loading user perferences
+        val prefs = getSharedPreferences("user_prefs", MODE_PRIVATE)
+        val mode = prefs.getString("color_mode", "normal")!!
+        //applying the colors
+        applyColorMode(mode)
+
         updateView()
     }
+
+    private fun applyColorMode(mode: String) {
+        val backgroundColor = ContextCompat.getColor(this,
+            if (mode == "colorblind") R.color.backgroundColor_cb else R.color.backgroundColor)
+        val titleColor = ContextCompat.getColor(this,
+            if (mode == "colorblind") R.color.titleColor_cb else R.color.titleColor)
+        val textColor = ContextCompat.getColor(this,
+            if (mode == "colorblind") R.color.textColor_cb else R.color.textColor)
+
+        layout.setBackgroundColor(backgroundColor)
+        title.setTextColor(titleColor)
+        description.setTextColor(textColor)
+    }
+
 
     private fun checkPermissionAndStartListening() {
         if (ContextCompat.checkSelfPermission(this, speechPermission) == PackageManager.PERMISSION_GRANTED) {

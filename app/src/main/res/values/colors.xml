@@ -1,5 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+<!--    normal colors-->
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="textColor">#6D016A</color>
+    <color name="titleColor">#EE642F</color>
+    <color name="descriptionColor">#3C8CBE</color>
+    <color name="backgroundColor">#F9F4EC</color>
+
+<!--    colorblind-->
+    <color name="textColor_cb">#2A3B5B</color>
+    <color name="titleColor_cb">#8B8747</color>
+    <color name="descriptionColor_cb">#9C9BB5</color>
+    <color name="backgroundColor_cb">#FAF2EA</color>
+
 </resources>
