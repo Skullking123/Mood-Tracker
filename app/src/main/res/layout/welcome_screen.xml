@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/welcomeTitle"
+        android:text="Mood Tracker App"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="40dp"
+        android:textSize="45dp"
+        android:textStyle="bold"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/welcomeDescription"
+        android:text="In this app you will be able to input your moods for each day and keep a mood diary"
+        android:textSize="20dp"
+        android:layout_below="@+id/welcomeTitle"
+        android:gravity="center"
+        android:layout_marginTop="40dp"
+        android:layout_marginHorizontal="20dp"
+
+        />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="110dp"
+        android:id="@+id/welcomeMoodImage"
+        android:layout_below="@id/welcomeDescription"
+        android:src="@drawable/welcome_image"
+        android:layout_marginTop="40dp"
+        />
+
+    <EditText
+        android:layout_below="@+id/welcomeMoodImage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/nameEntered"
+        android:hint="Enter your name"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="40dp"
+        android:textSize="30dp"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/colorPreferenceText"
+        android:text="Select Your Color Preference"
+        android:layout_below="@id/nameEntered"
+        android:layout_centerHorizontal="true"
+        android:textSize="25dp"
+        android:layout_marginTop="40dp"
+        android:textStyle="bold"/>
+
+    <RadioGroup
+        android:layout_below="@+id/colorPreferenceText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/colorModeGroup"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        >
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/normalColorOption"
+            android:text="Normal Colors"
+            android:textSize="20dp"
+            />
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/colorblindOption"
+            android:text="Colorblind Mode"
+            android:textSize="20dp"/>
+
+    </RadioGroup>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/colorModeGroup"
+        android:id="@+id/welcomeButton"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="40dp"
+        android:text="To Mood and Diary"
+        />
+    
+</RelativeLayout>
