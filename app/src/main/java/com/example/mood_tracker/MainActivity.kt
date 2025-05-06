@@ -13,9 +13,16 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import java.util.Calendar
 import java.util.Date
+import com.google.android.gms.ads.AdError
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.FullScreenContentCallback
+import com.google.android.gms.ads.LoadAdError
+import com.google.android.gms.ads.interstitial.InterstitialAd
+import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
 
 class MainActivity : AppCompatActivity() {
     lateinit var calendar : CalendarView
+    private lateinit var ad : InterstitialAd
 
     private lateinit var layout : LinearLayout
     private lateinit var title : TextView
@@ -44,7 +51,7 @@ class MainActivity : AppCompatActivity() {
         //applying name
         description.text = "Hi $name, click on a day to add an entry!"
 
-
+        showTheAd( )
     }
 
     private fun applyColorMode(mode: String) {
@@ -77,6 +84,60 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+    }
+
+    fun showTheAd( ) {
+        var builder : AdRequest.Builder = AdRequest.Builder( )
+        builder.addKeyword( "fitness" ).addKeyword( "workout" )
+        var request : AdRequest = builder.build()
+
+        var adUnitId : String = "ca-app-pub-3940256099942544/1033173712"
+        var adLoad : AdLoad = AdLoad( )
+        InterstitialAd.load( this, adUnitId, request, adLoad )
+    }
+
+    inner class AdLoad : InterstitialAdLoadCallback() {
+        override fun onAdLoaded(p0: InterstitialAd) {
+            super.onAdLoaded(p0)
+            Log.w( "MainActivity", "Inside onAdLoaded" )
+            ad = p0
+            ad.show( this@MainActivity )
+
+            var manageAdShowing : ManageAdShowing = ManageAdShowing( )
+            ad.fullScreenContentCallback = manageAdShowing
+        }
+
+        override fun onAdFailedToLoad(p0: LoadAdError) {
+            super.onAdFailedToLoad(p0)
+            Log.w( "MainActivity", "Inside onAdFailedToLoad" )
+        }
+    }
+
+    inner class ManageAdShowing : FullScreenContentCallback() {
+        override fun onAdClicked() {
+            super.onAdClicked()
+            Log.w( "MainActivity", "Inside adClicked" )
+        }
+
+        override fun onAdImpression() {
+            super.onAdImpression()
+            Log.w( "MainActivity", "Inside onAdImpression" )
+        }
+
+        override fun onAdDismissedFullScreenContent() {
+            super.onAdDismissedFullScreenContent()
+            Log.w( "MainActivity", "Inside onAdDismissedFullScreenContent" )
+        }
+
+        override fun onAdShowedFullScreenContent() {
+            super.onAdShowedFullScreenContent()
+            Log.w( "MainActivity", "Inside on AdShowedFullScreenContent" )
+        }
+
+        override fun onAdFailedToShowFullScreenContent(p0: AdError) {
+            super.onAdFailedToShowFullScreenContent(p0)
+            Log.w( "MainActivity", "Inside onAdFailedToShowFullScreenContent" )
+        }
     }
 
     companion object {
