@@ -49,7 +49,10 @@ class MainActivity : AppCompatActivity() {
         applyColorMode(mode)
 
         //applying name
-        description.text = "Hi $name, click on a day to add an entry!"
+        val displayName = name
+            .orEmpty()
+            .ifEmpty { "there" }
+        description.text = "Hi $displayName! click on a day to add an entry!"
 
         showTheAd( )
     }
