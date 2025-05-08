@@ -15,7 +15,9 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:text="Add Mood"
-        android:textSize='40sp' />
+        android:textSize='40sp'
+        android:textStyle="bold"
+        android:layout_marginTop="50dp"/>
 
 <!--don't add a layout weight to the rating bar, the stars
 will disappear-->
@@ -30,11 +32,11 @@ will disappear-->
 
     <EditText
         android:id="@+id/description"
-        android:layout_width="match_parent"
+        android:layout_width="350dp"
         android:layout_height="0dp"
         android:layout_weight="9"
         android:gravity="start"
-        android:hint="Why do you feel like so!"
+        android:hint="Why do you feel like so?"
         android:textSize='30sp' />
 
     <Button
@@ -43,7 +45,8 @@ will disappear-->
         android:layout_weight="0.5"
         android:id="@+id/micButton"
         android:text="Microphone"
-        android:textSize="30sp"/>
+        android:textSize="30sp"
+        />
 
     <Button
         android:id="@+id/submitButton"
