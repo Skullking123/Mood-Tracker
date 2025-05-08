@@ -1,6 +1,8 @@
 package com.example.mood_tracker
 
 import android.content.Intent
+import android.content.res.ColorStateList
+import android.graphics.PorterDuff
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
@@ -24,6 +26,7 @@ class WelcomeActivity : AppCompatActivity() {
     private lateinit var text : TextView
     private lateinit var colorblindText : TextView
     private lateinit var normalText : TextView
+    private lateinit var button : Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -83,18 +86,16 @@ class WelcomeActivity : AppCompatActivity() {
             if (mode == "colorblind") R.color.backgroundColor_cb else R.color.backgroundColor)
         val titleColor = ContextCompat.getColor(this,
             if (mode == "colorblind") R.color.titleColor_cb else R.color.titleColor)
-        val descriptionColor = ContextCompat.getColor(this,
-            if (mode == "colorblind") R.color.descriptionColor_cb else R.color.descriptionColor)
         val textColor = ContextCompat.getColor(this,
             if (mode == "colorblind") R.color.textColor_cb else R.color.textColor)
 
         layout.setBackgroundColor(backgroundColor)
         title.setTextColor(titleColor)
-        description.setTextColor(descriptionColor)
+        description.setTextColor(textColor)
         text.setTextColor(titleColor)
         normalText.setTextColor(textColor)
         colorblindText.setTextColor(textColor)
-
+        continueButton.backgroundTintList = ColorStateList.valueOf(textColor)
     }
 
     //function will validate the form and move to the next view if valid

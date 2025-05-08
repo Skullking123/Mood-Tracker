@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.content.res.ColorStateList
 import android.speech.RecognitionListener
 import android.speech.RecognizerIntent
 import android.speech.SpeechRecognizer
@@ -107,6 +108,8 @@ class AddMoodActivity : AppCompatActivity() {
         layout.setBackgroundColor(backgroundColor)
         title.setTextColor(titleColor)
         description.setTextColor(textColor)
+        mic.backgroundTintList = ColorStateList.valueOf(textColor)
+        submit.backgroundTintList = ColorStateList.valueOf(textColor)
     }
 
 
